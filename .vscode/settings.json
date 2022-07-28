@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./Pose-Tracking/src/depthai_blazepose"
+    ]
+}
