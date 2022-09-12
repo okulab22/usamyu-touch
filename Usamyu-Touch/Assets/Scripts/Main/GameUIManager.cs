@@ -12,7 +12,7 @@ public class GameUIManager : MonoBehaviour
     private TextMeshProUGUI DisplayTime;
 
     [SerializeField]
-    private TextMeshProUGUI DisplayUsamyu;
+    private TextMeshProUGUI DisplayLife;
 
     [SerializeField]
     private TextMeshProUGUI DisplayScore;
@@ -40,15 +40,15 @@ public class GameUIManager : MonoBehaviour
         Result.SetActive(false);
         stateMessageUI.SetActive(false);
 
-        DisplayTime.text = $"Remainig Time :{GameManager.remainingTime}";
-        DisplayUsamyu.text = "Usamyu : 0";
+        DisplayTime.text = $"Playing Time : {GameManager.elapsedTime}";
+        DisplayLife.text = $"Life : {PlayerManager.playerLife}";
         DisplayScore.text = "Score : 0";
     }
 
     void Update()
     {
-        DisplayTime.text = $"Remainig Time :{GameManager.remainingTime}";
-        DisplayUsamyu.text = $"Usamyu :  {ScoreManager.sum}";
+        DisplayTime.text = $"Playing Time : {GameManager.elapsedTime}";
+        DisplayLife.text = $"Life : {PlayerManager.playerLife}";
         DisplayScore.text = $"Score : {ScoreManager.score}";
     }
 
@@ -66,12 +66,12 @@ public class GameUIManager : MonoBehaviour
     }
 
     /// <summary>
-    /// タイムアップ時のテキスト表示
+    /// ゲームオーバー時のテキスト表示
     /// </summary>
-    public void ShowFinishMessage()
+    public void ShowGameOverMessage()
     {
         stateMessageUI.SetActive(true);
-        stateMessageText.text = "FINISH!";
+        stateMessageText.text = "GAME OVER!";
     }
 
     /// <summary>

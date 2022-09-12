@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
         elapsedTime = 0;
 
         backTitleBtForPose.SetActive(false);
+
+        playerManager.OnGameOver.AddListener(GameOver);
     }
 
     void Start()
@@ -124,6 +126,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void GameOver()
+    {
+        StopCoroutine(countGameTime);
+        SetCurrentState(GameState.End);
+    }
+
     /// <summary>
     /// カウントダウンを行い状態をPlayingにする
     /// </summary>
@@ -145,17 +153,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     IEnumerator CountGameTime()
     {
-        for (int i = 0; i <= gameTime; i++)
+        while (true)
         {
-            remainingTime = gameTime - i;
-            elapsedTime = i;
-
-            if (i == gameTime)
-                yield return new WaitForSeconds(0);
-            else
-                yield return new WaitForSeconds(1);
+            elapsedTime++;
+            yield return new WaitForSeconds(1);
         }
-        SetCurrentState(GameState.End);
     }
 
     /// <summary>
@@ -164,7 +166,7 @@ public class GameManager : MonoBehaviour
     IEnumerator OnTimeIsUp()
     {
         // タイムアップ時のメッセージ表示
-        gameUIManager.ShowFinishMessage();
+        gameUIManager.ShowGameOverMessage();
         yield return new WaitForSeconds(2);
 
         // リザルト表示

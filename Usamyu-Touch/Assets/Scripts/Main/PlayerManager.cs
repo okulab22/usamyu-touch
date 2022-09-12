@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// 姿勢位置の入力管理
+/// プレイヤー関連
+/// 姿勢位置の入力と状態管理
 /// </summary>
 public class PlayerManager : MonoBehaviour
 {
@@ -28,7 +29,10 @@ public class PlayerManager : MonoBehaviour
     }
 
     private State nowState = State.Normal;
-    private int playerLife = 0;
+    public static int playerLife = 0;
+
+    // ゲームオーバーイベント
+    public UnityEvent OnGameOver = new UnityEvent();
 
     void Awake()
     {
@@ -101,7 +105,7 @@ public class PlayerManager : MonoBehaviour
                 break;
             case "Usamyu":
                 Usamyu usamyu = collisionObj.GetComponent<Usamyu>();
-
+                OnTouchedUsamyu(usamyu);
                 usamyu.Delete();
                 break;
             default:
@@ -110,15 +114,24 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
+    /// プレイヤーダメージ時の一定時間無敵処理
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator NoDamageCountDown()
+    {
+        yield return new WaitForSeconds(3);
+        setState(State.Normal);
+    }
+
+    /// <summary>
     /// うさみゅ～タッチ時の処理
     /// </summary>
     /// <param name="usamyu"></param>
     private void OnTouchedUsamyu(Usamyu usamyu)
     {
-        if (usamyu.type == "damage")
-        { // TODO: 無敵確認．無敵の場合はスキップ
-            OnDamaged();
-            // TODO: コルーチンで一定時間無限状態にする
+        if (usamyu.type == "damage" && nowState == State.Normal)
+        {
+            setState(State.Damaged);
         }
     }
 
@@ -128,10 +141,47 @@ public class PlayerManager : MonoBehaviour
     private void OnDamaged()
     {
         playerLife--;
+        Debug.Log($"Player Damaged! Life Remain: {playerLife}");
 
         if (playerLife <= 0)
         {
-            // TODO: ゲームオーバーを通知
+            OnGameOver.Invoke();
+            Debug.Log("Game Over!!!");
+        }
+        else
+        {
+            StartCoroutine(NoDamageCountDown());
+        }
+    }
+
+    /// <summary>
+    /// プレイヤーの状態を設定
+    /// </summary>
+    /// <param name="state"></param>
+    public void setState(State state)
+    {
+        nowState = state;
+        onStateChanged(state);
+        Debug.Log($"Player State Changed. {state}");
+    }
+
+    /// <summary>
+    /// プレイヤーの状態変更時の処理
+    /// </summary>
+    /// <param name="state"></param>
+    private void onStateChanged(State state)
+    {
+        switch (state)
+        {
+            case State.Normal:
+                break;
+            case State.Damaged:
+                OnDamaged();
+                break;
+            case State.Fever:
+                break;
+            default:
+                break;
         }
     }
 }

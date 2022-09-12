@@ -128,11 +128,12 @@ public class UsamyuManager : MonoBehaviour
 
     void Update()
     {
+        // NOTE: ゲーム残り時間から経過時間による出現制御に仮変更
         //スポーンが許可されているか (true だったらスポーンさせる)
         if (allowSpawn == true)
         {
-            // 残り時間が10秒以内であれば出現数の最大値を10にする
-            if (GameManager.remainingTime <= 10)
+            // 経過時間が80秒以上であれば出現数の最大値を10にする
+            if (GameManager.remainingTime >= 80)
                 maxusamyu = 12;
 
             //出現数が上限以内か
@@ -141,19 +142,19 @@ public class UsamyuManager : MonoBehaviour
                 //出現間隔以上の時間が経っているか
                 if (elapsedTime < timeInterval) //経過時間 < 出現間隔
                     elapsedTime += Time.deltaTime;
-                else //経過時間 >= 出現間隔
+                else
                 {
                     SpawnUsamyu(); // うさみゅ～のスポーン
                     elapsedTime = 0;
-                    if (GameManager.remainingTime > 70) // 残り時間が70秒～90秒以内であれば2秒～4秒の間隔で次のうさみゅ～を出現させる
+                    if (GameManager.elapsedTime < 20) // 経過時間が20秒以内であれば2秒～4秒の間隔で次のうさみゅ～を出現させる
                     {
                         timeInterval = Random.Range(2, 4);
                     }
-                    else if (GameManager.remainingTime <= 70 && GameManager.remainingTime > 10) // 残り時間が10秒～70秒以内であれば2秒～3秒の間隔で次のうさみゅ～を出現させる
+                    else if (GameManager.elapsedTime <= 80) // 残り時間が10秒～70秒以内であれば2秒～3秒の間隔で次のうさみゅ～を出現させる
                     {
                         timeInterval = Random.Range(1, 2);
                     }
-                    else // 残り時間が10秒を切ったら1秒～2秒の間隔でうさみゅ～を出現させる
+                    else // 経過時間が80秒以上の場合 1秒～2秒の間隔でうさみゅ～を出現させる
                     {
                         timeInterval = Random.Range(0, 1);
                     }
