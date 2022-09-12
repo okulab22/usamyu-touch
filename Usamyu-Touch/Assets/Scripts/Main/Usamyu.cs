@@ -18,6 +18,9 @@ public abstract class Usamyu : MonoBehaviour
     [SerializeField] protected int baseScore; //初期スコア
     protected int currentScore; // 変動スコア
 
+    // うさみゅ～のタイプ
+    public string type;
+
     void Awake()
     {
         // 初期は非表示に
