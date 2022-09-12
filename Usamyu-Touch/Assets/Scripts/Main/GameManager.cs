@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
     IEnumerator OnTimeIsUp()
     {
         // タイムアップ時のメッセージ表示
-        gameUIManager.ShowFinishMessage();
+        gameUIManager.ShowGameOverMessage();
         yield return new WaitForSeconds(2);
 
         // リザルト表示

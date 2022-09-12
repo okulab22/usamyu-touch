@@ -934,7 +934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayTime: {fileID: 1515089114}
-  DisplayUsamyu: {fileID: 506923453}
+  DisplayLife: {fileID: 506923453}
   DisplayScore: {fileID: 337213378}
   stateMessageUI: {fileID: 1070162782}
   stateMessageText: {fileID: 246973212}
@@ -1103,7 +1103,7 @@ GameObject:
   - component: {fileID: 506923454}
   - component: {fileID: 506923453}
   m_Layer: 5
-  m_Name: DisplayUsamyu
+  m_Name: DisplayLife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1149,7 +1149,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Usamyu:'
+  m_text: 'Life: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3294,7 +3294,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Remaining Time: '
+  m_text: 'Playing Time: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3945,6 +3945,9 @@ MonoBehaviour:
   rightHand: {fileID: 535470551}
   leftFoot: {fileID: 2086797842}
   rightFoot: {fileID: 1006639130}
+  OnGameOver:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1862474020
 Transform:
   m_ObjectHideFlags: 0

@@ -29,7 +29,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     private State nowState = State.Normal;
-    private int playerLife = 0;
+    public static int playerLife = 0;
 
     // ゲームオーバーイベント
     public UnityEvent OnGameOver = new UnityEvent();
