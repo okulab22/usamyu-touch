@@ -112,4 +112,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseScore: -100
+  type: damage
   survivalTime: 3
