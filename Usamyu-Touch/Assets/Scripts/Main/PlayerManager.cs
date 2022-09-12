@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// 姿勢位置の入力管理
@@ -20,10 +21,20 @@ public class PlayerManager : MonoBehaviour
 
     private GameObject[] posePointList;
 
+    // プレイヤーの状態
+    public enum State
+    {
+        Normal, Damaged, Fever
+    }
+
+    private State nowState = State.Normal;
+    private int playerLife = 0;
+
     void Awake()
     {
         // 姿勢位置のオブジェクト配列初期化
         posePointList = new GameObject[] { leftHand, rightHand, leftFoot, rightFoot };
+        playerLife = 5;
     }
 
     /// <summary>
@@ -90,10 +101,37 @@ public class PlayerManager : MonoBehaviour
                 break;
             case "Usamyu":
                 Usamyu usamyu = collisionObj.GetComponent<Usamyu>();
+
                 usamyu.Delete();
                 break;
             default:
                 break;
+        }
+    }
+
+    /// <summary>
+    /// うさみゅ～タッチ時の処理
+    /// </summary>
+    /// <param name="usamyu"></param>
+    private void OnTouchedUsamyu(Usamyu usamyu)
+    {
+        if (usamyu.type == "damage")
+        { // TODO: 無敵確認．無敵の場合はスキップ
+            OnDamaged();
+            // TODO: コルーチンで一定時間無限状態にする
+        }
+    }
+
+    /// <summary>
+    /// プレイヤーがダメージを受けた時の処理
+    /// </summary>
+    private void OnDamaged()
+    {
+        playerLife--;
+
+        if (playerLife <= 0)
+        {
+            // TODO: ゲームオーバーを通知
         }
     }
 }
