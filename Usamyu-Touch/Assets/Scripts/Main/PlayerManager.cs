@@ -31,6 +31,9 @@ public class PlayerManager : MonoBehaviour
     private State nowState = State.Normal;
     private int playerLife = 0;
 
+    // ゲームオーバーイベント
+    public UnityEvent OnGameOver = new UnityEvent();
+
     void Awake()
     {
         // 姿勢位置のオブジェクト配列初期化
@@ -142,7 +145,7 @@ public class PlayerManager : MonoBehaviour
 
         if (playerLife <= 0)
         {
-            // TODO: ゲームオーバーを通知
+            OnGameOver.Invoke();
             Debug.Log("Game Over!!!");
         }
         else
