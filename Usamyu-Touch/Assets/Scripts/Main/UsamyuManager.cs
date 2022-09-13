@@ -28,6 +28,10 @@ public class UsamyuManager : MonoBehaviour
     private int randNum;
     //うさみゅ～の種類
     private int kindofUsamyu;
+    //うさみゅ～の初期のx座標
+    private float posx;
+    //うさみゅ～の初期のy座標
+    private float posy;
 
     /// <summary>
     /// ゲーム開始前の初期化処理
@@ -56,10 +60,8 @@ public class UsamyuManager : MonoBehaviour
     /// </summary>
     public void SpawnUsamyu()
     {
-        // ランダム出現位置
-        Vector2 randomPosition = new Vector2(Random.Range(15, 85) * 0.01f, Random.Range(15, 85) * 0.01f);
 
-        randNum = Random.Range(0, 13); // 0～12の乱数を生成
+        randNum = Random.Range(0, 15); // 0～14の乱数を生成
 
         if(randNum >= 0 && randNum <= 4) // 生成された乱数が0～4の場合
             kindofUsamyu = 0; // 赤うさみゅ～
@@ -69,8 +71,23 @@ public class UsamyuManager : MonoBehaviour
             kindofUsamyu = 2; // 緑うさみゅ～
         else if(randNum >= 10 && randNum <= 11) // 生成された乱数が10～11の場合
             kindofUsamyu = 3; // 紫うさみゅ～
-        else                                    // 生成された乱数が12の場合
-            kindofUsamyu = 4; // 黄色うさみゅ～
+        else if(randNum == 12) // 生成された乱数が12の場合
+            kindofUsamyu = 4;  // 黄色うさみゅ～
+        else                   // 生成された乱数が13または14の場合                 
+            kindofUsamyu = 5;  // うさみゅ～軍団
+        
+        
+        if(kindofUsamyu != 5){ // うさみゅ～軍団以外の場合
+            posx = Random.Range(15, 85) * 0.01f;
+            posy = Random.Range(15, 85) * 0.01f;
+        }
+        else{ // うさみゅ～軍団の場合
+            posx = Random.Range(15, 85) * 0.01f;
+            posy = 1.0f;
+        }
+
+        Vector2 randomPosition = new Vector2(posx, posy);
+        
 
         // うさみゅ～をPrefabから読み込み
         GameObject usamyuObj =
