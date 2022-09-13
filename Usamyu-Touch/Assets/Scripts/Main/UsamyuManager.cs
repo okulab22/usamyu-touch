@@ -157,7 +157,7 @@ public class UsamyuManager : MonoBehaviour
         if (allowSpawn == true)
         {
             // 経過時間が80秒以上であれば出現数の最大値を10にする
-            if (GameManager.remainingTime >= 80)
+            if (GameManager.elapsedTime >= 80)
                 maxusamyu = 12;
 
             //出現数が上限以内か
