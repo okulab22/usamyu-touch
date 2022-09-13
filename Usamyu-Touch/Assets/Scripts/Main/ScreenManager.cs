@@ -54,4 +54,19 @@ public class ScreenManager : MonoBehaviour
 
         return gamePos;
     }
+
+    /// <summary>
+    /// ゲーム座標からViewport座標に変換
+    /// </summary>
+    /// <param name="gamePos"></param>
+    /// <returns></returns>
+    public static Vector2 GamePositionToViewportPosition(Vector3 gamePos)
+    {
+        Vector2 viewportPos = gamePos / frontScreenSize;
+
+        // 画面中央が原点なので0.5加算
+        viewportPos.x += .5f;
+
+        return viewportPos;
+    }
 }
