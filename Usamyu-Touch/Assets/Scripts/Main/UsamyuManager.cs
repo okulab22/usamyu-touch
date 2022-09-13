@@ -60,10 +60,8 @@ public class UsamyuManager : MonoBehaviour
     /// </summary>
     public void SpawnUsamyu()
     {
-        // ランダム出現位置
-        //Vector2 randomPosition = new Vector2(Random.Range(15, 85) * 0.01f, Random.Range(15, 85) * 0.01f);
 
-        randNum = Random.Range(0, 15); // 0～12の乱数を生成
+        randNum = Random.Range(0, 15); // 0～14の乱数を生成
 
         if(randNum >= 0 && randNum <= 4) // 生成された乱数が0～4の場合
             kindofUsamyu = 0; // 赤うさみゅ～
@@ -79,11 +77,11 @@ public class UsamyuManager : MonoBehaviour
             kindofUsamyu = 5;  // うさみゅ～軍団
         
         
-        if(kindofUsamyu != 5){
+        if(kindofUsamyu != 5){ // うさみゅ～軍団以外の場合
             posx = Random.Range(15, 85) * 0.01f;
             posy = Random.Range(15, 85) * 0.01f;
         }
-        else{
+        else{ // うさみゅ～軍団の場合
             posx = Random.Range(15, 85) * 0.01f;
             posy = 1.0f;
         }
