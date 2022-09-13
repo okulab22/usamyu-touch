@@ -31,6 +31,9 @@ public class PlayerManager : MonoBehaviour
     private State nowState = State.Normal;
     public static int playerLife = 0;
 
+    // ライフ更新イベント
+    public UnityEvent OnUpdateLife = new UnityEvent();
+
     // ゲームオーバーイベント
     public UnityEvent OnGameOver = new UnityEvent();
 
@@ -38,7 +41,12 @@ public class PlayerManager : MonoBehaviour
     {
         // 姿勢位置のオブジェクト配列初期化
         posePointList = new GameObject[] { leftHand, rightHand, leftFoot, rightFoot };
+    }
+
+    void Start()
+    {
         playerLife = 5;
+        OnUpdateLife.Invoke();
     }
 
     /// <summary>
@@ -141,6 +149,7 @@ public class PlayerManager : MonoBehaviour
     private void OnDamaged()
     {
         playerLife--;
+        OnUpdateLife.Invoke();
         Debug.Log($"Player Damaged! Life Remain: {playerLife}");
 
         if (playerLife <= 0)
