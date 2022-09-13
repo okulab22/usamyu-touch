@@ -19,6 +19,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private GameObject rightHand;
     [SerializeField] private GameObject leftFoot;
     [SerializeField] private GameObject rightFoot;
+    [SerializeField] private GameObject nose;
+
+    public static Vector3 nosePos = Vector3.zero;
 
     private GameObject[] posePointList;
 
@@ -47,6 +50,11 @@ public class PlayerManager : MonoBehaviour
     {
         playerLife = 5;
         OnUpdateLife.Invoke();
+    }
+
+    void Update()
+    {
+        nosePos = nose.transform.position;
     }
 
     /// <summary>

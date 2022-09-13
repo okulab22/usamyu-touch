@@ -63,31 +63,36 @@ public class UsamyuManager : MonoBehaviour
 
         randNum = Random.Range(0, 15); // 0～14の乱数を生成
 
-        if(randNum >= 0 && randNum <= 4) // 生成された乱数が0～4の場合
+        if (randNum >= 0 && randNum <= 4) // 生成された乱数が0～4の場合
             kindofUsamyu = 0; // 赤うさみゅ～
-        else if(randNum >= 5 && randNum <= 7) // 生成された乱数が5～7の場合
+        else if (randNum >= 5 && randNum <= 7) // 生成された乱数が5～7の場合
             kindofUsamyu = 1; // 水色うさみゅ～
         else if (randNum >= 8 && randNum <= 9) // 生成された乱数が8～9の場合
             kindofUsamyu = 2; // 緑うさみゅ～
-        else if(randNum >= 10 && randNum <= 11) // 生成された乱数が10～11の場合
+        else if (randNum >= 10 && randNum <= 11) // 生成された乱数が10～11の場合
             kindofUsamyu = 3; // 紫うさみゅ～
-        else if(randNum == 12) // 生成された乱数が12の場合
+        else if (randNum == 12) // 生成された乱数が12の場合
             kindofUsamyu = 4;  // 黄色うさみゅ～
         else                   // 生成された乱数が13または14の場合                 
             kindofUsamyu = 5;  // うさみゅ～軍団
-        
-        
-        if(kindofUsamyu != 5){ // うさみゅ～軍団以外の場合
+
+
+        if (kindofUsamyu != 5)
+        { // うさみゅ～軍団以外の場合
             posx = Random.Range(15, 85) * 0.01f;
             posy = Random.Range(15, 85) * 0.01f;
         }
-        else{ // うさみゅ～軍団の場合
-            posx = Random.Range(15, 85) * 0.01f;
+        else
+        { // うさみゅ～軍団の場合
+            // プレイヤーの中心位置を取得
+            Vector2 playerPos = ScreenManager.GamePositionToViewportPosition(PlayerManager.nosePos);
+
+            posx = playerPos.x;
             posy = 1.0f;
         }
 
         Vector2 randomPosition = new Vector2(posx, posy);
-        
+
 
         // うさみゅ～をPrefabから読み込み
         GameObject usamyuObj =
@@ -116,9 +121,9 @@ public class UsamyuManager : MonoBehaviour
         GameObject targetUsamyu = appearedUsamyuDict[id];
 
         if (isTouched)
-        {   
+        {
             if (GameManager.elapsedTime > 20) // 経過時間が20秒以降であれば、経過時間に応じてスコアを増加させる
-                score = (int) (score * (1 + GameManager.elapsedTime * 0.01f)); 
+                score = (int)(score * (1 + GameManager.elapsedTime * 0.01f));
             ScoreManager.AddScore(score);
         }
 
@@ -152,7 +157,7 @@ public class UsamyuManager : MonoBehaviour
         if (allowSpawn == true)
         {
             // 経過時間が80秒以上であれば出現数の最大値を10にする
-            if (GameManager.remainingTime >= 80)
+            if (GameManager.elapsedTime >= 80)
                 maxusamyu = 12;
 
             //出現数が上限以内か
