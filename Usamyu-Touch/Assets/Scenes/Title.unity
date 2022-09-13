@@ -1401,6 +1401,13 @@ MonoBehaviour:
   rightHand: {fileID: 169278292}
   leftFoot: {fileID: 1474006956}
   rightFoot: {fileID: 227098616}
+  nose: {fileID: 1143674534}
+  OnUpdateLife:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGameOver:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &862830392
 Transform:
   m_ObjectHideFlags: 0
