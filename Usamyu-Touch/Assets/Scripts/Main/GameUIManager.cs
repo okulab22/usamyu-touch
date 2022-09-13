@@ -12,9 +12,6 @@ public class GameUIManager : MonoBehaviour
     private TextMeshProUGUI DisplayTime;
 
     [SerializeField]
-    private TextMeshProUGUI DisplayLife;
-
-    [SerializeField]
     private TextMeshProUGUI DisplayScore;
 
     // カウントダウンテキスト関係
@@ -32,6 +29,17 @@ public class GameUIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI ScoreResult;
 
+    // ライフゲージ
+    [SerializeField]
+    private CarrotGaugeController carrotGaugeController;
+
+    [SerializeField]
+    private PlayerManager playerManager;
+
+    void Awake()
+    {
+        playerManager.OnUpdateLife.AddListener(UpdateLife);
+    }
 
     // Update is called once per frame
     void Start()
@@ -41,15 +49,18 @@ public class GameUIManager : MonoBehaviour
         stateMessageUI.SetActive(false);
 
         DisplayTime.text = $"Playing Time : {GameManager.elapsedTime}";
-        DisplayLife.text = $"Life : {PlayerManager.playerLife}";
         DisplayScore.text = "Score : 0";
     }
 
     void Update()
     {
         DisplayTime.text = $"Playing Time : {GameManager.elapsedTime}";
-        DisplayLife.text = $"Life : {PlayerManager.playerLife}";
         DisplayScore.text = $"Score : {ScoreManager.score}";
+    }
+
+    public void UpdateLife()
+    {
+        carrotGaugeController.setCarrotGauge(PlayerManager.playerLife);
     }
 
     /// <summary>
