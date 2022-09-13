@@ -118,7 +118,9 @@ public class UsamyuManager : MonoBehaviour
         GameObject targetUsamyu = appearedUsamyuDict[id];
 
         if (isTouched)
-        {
+        {   
+            if (GameManager.elapsedTime > 20) // 経過時間が20秒以降であれば、経過時間に応じてスコアを増加させる
+                score = (int) (score * (1 + GameManager.elapsedTime * 0.01f)); 
             ScoreManager.AddScore(score);
         }
 
