@@ -21,7 +21,11 @@ public class YankeeUsamyu : Usamyu
     /// </summary>
     /// <returns>Vector2(x, y) 移動先のViewport座標</returns>
     protected override Vector2 Move()
-    {
+    {   
+        if(GameManager.elapsedTime > 40) // 40秒経過後にスピードを0.01増やす
+            speed += 0.01f;
+        else if(GameManager.elapsedTime > 80)
+            speed += 0.015f;            // 80経過後にスピードを0.15増やす
         return new Vector2(basePosition.x, basePosition.y - speed*elapsedTime);
     }
     
