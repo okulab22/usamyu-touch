@@ -23,6 +23,7 @@ public class YellowUsamyu : Usamyu
     /// <returns>Vector2(x, y) 移動先のViewport座標</returns>
     protected override Vector2 Move()
     {
+        
         x = radius * Mathf.Sin(Time.time * speed);
         y = radius * Mathf.Cos(Time.time * speed);
 

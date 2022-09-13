@@ -16,6 +16,12 @@ public class PurpleUsamyu : Usamyu
     private float radius = 0.15f;
     private float speed = 3f;
 
+    private int rnd;
+
+    void Start(){
+        rnd = Random.Range(1,5);
+    }
+
     /// <summary>
     /// うさみゅ～の移動処理
     /// フレーム毎に呼び出される
@@ -23,8 +29,10 @@ public class PurpleUsamyu : Usamyu
     /// <returns>Vector2(x, y) 移動先のViewport座標</returns>
     protected override Vector2 Move()
     {
-        x = radius * Mathf.Sin(Time.time * speed);
-        y = radius * Mathf.Cos(Time.time * speed);
+        
+
+        x = radius * Mathf.Sin(Time.time * speed) * Mathf.Cos(rnd * Time.time * speed + rnd);
+        y = radius * Mathf.Cos(Time.time * speed) * Mathf.Sin(rnd * Time.time * speed + rnd);
 
         // 片方を縦横比で割る
         // こうしないと楕円になる

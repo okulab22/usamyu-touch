@@ -23,8 +23,8 @@ public class GreenUsamyu : Usamyu
     /// <returns>Vector2(x, y) 移動先のViewport座標</returns>
     protected override Vector2 Move()
     {
-        x = radius * Mathf.Sin(Time.time * speed);
-        y = radius * Mathf.Cos(Time.time * speed);
+        x = radius * Mathf.Sin(Time.time * speed * 5 / 4);
+        y = 2 * radius * Mathf.Cos(Time.time * speed * 5 / 8);
 
         // 片方を縦横比で割る
         // こうしないと楕円になる
