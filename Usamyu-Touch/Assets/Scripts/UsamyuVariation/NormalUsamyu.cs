@@ -16,6 +16,14 @@ public class NormalUsamyu : Usamyu
     private float radius = 0.1f;
     private float speed = 2f;
 
+    private int dirdecx, dirdecy;
+    private readonly int[] direc = new int[] { -1, 1 };
+
+    void Start(){
+        dirdecx = Random.Range(0,2);
+        dirdecy = Random.Range(0,2);
+    }
+
     /// <summary>
     /// うさみゅ～の移動処理
     /// フレーム毎に呼び出される
@@ -23,8 +31,8 @@ public class NormalUsamyu : Usamyu
     /// <returns>Vector2(x, y) 移動先のViewport座標</returns>
     protected override Vector2 Move()
     {
-        x = radius * Mathf.Sin(Time.time * speed);
-        y = radius * Mathf.Cos(Time.time * speed);
+        x = direc[dirdecx] * radius * Mathf.Sin(Time.time * speed);
+        y = direc[dirdecy] * radius * Mathf.Cos(Time.time * speed);
 
         // 片方を縦横比で割る
         // こうしないと楕円になる

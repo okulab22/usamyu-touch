@@ -16,6 +16,12 @@ public class BlueUsamyu : Usamyu
     private float radius = 0.2f;
     private float speed = 4f;
 
+    private int dirdecx;
+    private readonly int[] direc = new int[] { -1, 1 };
+
+    void Start(){
+        dirdecx = Random.Range(0,2);
+    }
     /// <summary>
     /// うさみゅ～の移動処理
     /// フレーム毎に呼び出される
@@ -23,7 +29,7 @@ public class BlueUsamyu : Usamyu
     /// <returns>Vector2(x, y) 移動先のViewport座標</returns>
     protected override Vector2 Move()
     {
-        x = radius * Mathf.Sin(Time.time / 2 * speed);
+        x = direc[dirdecx] * radius * Mathf.Sin(Time.time / 2 * speed);
         y = radius* Mathf.Abs(Mathf.Cos(Time.time * speed));
 
         // 片方を縦横比で割る

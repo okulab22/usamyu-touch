@@ -17,9 +17,13 @@ public class PurpleUsamyu : Usamyu
     private float speed = 3f;
 
     private int rnd;
+    private int dirdicx, dirdicy;
+    private readonly int[] direc = new int[] { -1, 1 };
 
     void Start(){
-        rnd = Random.Range(1,5);
+        rnd = Random.Range(1,6);
+        dirdicx = Random.Range(0,2);
+        dirdicy = Random.Range(0,2);
     }
 
     /// <summary>
@@ -31,8 +35,8 @@ public class PurpleUsamyu : Usamyu
     {
         
 
-        x = radius * Mathf.Sin(Time.time * speed) * Mathf.Cos(rnd * Time.time * speed + rnd);
-        y = radius * Mathf.Cos(Time.time * speed) * Mathf.Sin(rnd * Time.time * speed + rnd);
+        x = direc[dirdicx] * radius * Mathf.Sin(Time.time * speed) * Mathf.Cos(rnd * Time.time * speed + rnd);
+        y = direc[dirdicy] * radius * Mathf.Cos(Time.time * speed) * Mathf.Sin(rnd * Time.time * speed + rnd);
 
         // 片方を縦横比で割る
         // こうしないと楕円になる
