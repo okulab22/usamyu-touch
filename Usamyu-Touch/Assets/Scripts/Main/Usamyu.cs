@@ -12,6 +12,9 @@ public abstract class Usamyu : MonoBehaviour
     // 生成時の初期位置
     protected Vector2 basePosition;
 
+    //出現してからの経過時間
+    protected float elapsedTime = 0f;
+
     private IEnumerator untilDespawn;
 
     // スコア
@@ -32,6 +35,9 @@ public abstract class Usamyu : MonoBehaviour
     {
         // 自律移動
         this.transform.position = ScreenManager.ViewportToGamePosition(Move(), true);
+
+        elapsedTime += Time.deltaTime; // 出現してからの経過時間
+
     }
 
     /// <summary>

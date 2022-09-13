@@ -78,6 +78,7 @@ public class UsamyuManager : MonoBehaviour
         else                   // 生成された乱数が13または14の場合                 
             kindofUsamyu = 5;  // うさみゅ～軍団
         
+        
         if(kindofUsamyu != 5){
             posx = Random.Range(15, 85) * 0.01f;
             posy = Random.Range(15, 85) * 0.01f;
@@ -88,6 +89,7 @@ public class UsamyuManager : MonoBehaviour
         }
 
         Vector2 randomPosition = new Vector2(posx, posy);
+        
 
         // うさみゅ～をPrefabから読み込み
         GameObject usamyuObj =

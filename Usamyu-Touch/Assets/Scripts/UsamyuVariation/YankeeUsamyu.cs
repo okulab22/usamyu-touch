@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// むらさきのうさみゅ～
+/// うさみゅ～群
 /// </summary>
 public class YankeeUsamyu : Usamyu
 {
@@ -13,8 +13,7 @@ public class YankeeUsamyu : Usamyu
 
     // 移動演算に必要な変数
     private float x, y;
-    private float radius = 0.15f;
-    private float speed = 3f;
+    private float speed = 0.5f;
 
     /// <summary>
     /// うさみゅ～の移動処理
@@ -23,17 +22,9 @@ public class YankeeUsamyu : Usamyu
     /// <returns>Vector2(x, y) 移動先のViewport座標</returns>
     protected override Vector2 Move()
     {
-        x = radius * Mathf.Sin(Time.time * speed);
-        y = radius * Mathf.Cos(Time.time * speed);
-
-        // 片方を縦横比で割る
-        // こうしないと楕円になる
-        // y基準にすると 16:9 = x:1, x ~= 1.78
-        x /= 1.78f;
-
-        // 画面比率の問題で楕円運動になってしまっている
-        return new Vector2(basePosition.x + x, basePosition.y + y);
+        return new Vector2(basePosition.x, basePosition.y - speed*elapsedTime);
     }
+    
 
     /// <summary>
     /// 自然消滅までに行う処理
