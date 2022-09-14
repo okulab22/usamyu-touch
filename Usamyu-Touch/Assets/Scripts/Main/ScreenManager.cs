@@ -10,6 +10,8 @@ public class ScreenManager : MonoBehaviour
     static private Vector3 frontBottomLeftPoint = Vector3.zero;
     private Vector3 frontTopRightPoint = Vector3.zero;
     static private Vector2 frontScreenSize = Vector2.zero;
+    static private (float a, float b) calibrateParamX = (a: 0f, b: 0f);
+    static private (float a, float b) calibrateParamY = (a: 0f, b: 0f);
 
     void Awake()
     {
@@ -29,6 +31,19 @@ public class ScreenManager : MonoBehaviour
         frontScreenSize =
             new Vector2(frontTopRightPoint.x - frontBottomLeftPoint.x,
                         frontTopRightPoint.y - frontBottomLeftPoint.y);
+
+        initCalibrateParam(PlayerManager.playerBLPoint, PlayerManager.playerTRPoint);
+    }
+
+    private void initCalibrateParam(Vector2 playerPosBL, Vector2 playerPosTR)
+    {
+        float ax = (frontTopRightPoint.x - frontBottomLeftPoint.x) / (playerPosTR.x - playerPosBL.x);
+        float ay = (frontTopRightPoint.y - frontBottomLeftPoint.y) / (playerPosTR.y - playerPosBL.y);
+        float bx = ax * (-playerPosBL.x) + frontBottomLeftPoint.x;
+        float by = ay * (-playerPosBL.y) + frontBottomLeftPoint.y;
+
+        calibrateParamX = (a: ax, b: bx);
+        calibrateParamY = (a: ay, b: by);
     }
 
     /// <summary>
@@ -68,5 +83,14 @@ public class ScreenManager : MonoBehaviour
         viewportPos.x += .5f;
 
         return viewportPos;
+    }
+
+    public static Vector3 CalibratePlayerPos(Vector3 playerPos)
+    {
+        float posX = calibrateParamX.a * playerPos.x + calibrateParamX.b;
+        float posY = calibrateParamY.a * playerPos.y + calibrateParamY.b;
+
+        return new Vector3(posX, posY, playerPos.z);
+
     }
 }
