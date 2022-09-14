@@ -34,6 +34,10 @@ public class PlayerManager : MonoBehaviour
     private State nowState = State.Normal;
     public static int playerLife = 0;
 
+    // キャリブレーション用対角座標
+    public static Vector2 playerBLPoint = new Vector2(-0.6f, -0.7f);
+    public static Vector2 playerTRPoint = new Vector2(1.1f, 0.65f);
+
     // ライフ更新イベント
     public UnityEvent OnUpdateLife = new UnityEvent();
 
@@ -55,6 +59,8 @@ public class PlayerManager : MonoBehaviour
     void Update()
     {
         nosePos = nose.transform.position;
+
+        // Debug.Log($"HandL: {leftHand.transform.position} HandR: {rightHand.transform.position}");
     }
 
     /// <summary>
@@ -67,27 +73,80 @@ public class PlayerManager : MonoBehaviour
         // 頂点からレイを飛ばしてオブジェクトを取得
         foreach (GameObject point in posePointList)
         {
-            Debug.DrawRay(point.transform.position, Vector3.down * rayDistanceY, Color.red);
-            Debug.DrawRay(point.transform.position, Vector3.forward * rayDistanceZ, Color.red);
-            Debug.DrawRay(point.transform.position, Vector3.back * rayDistanceZ, Color.red);
+            Vector3 calibratePos = ScreenManager.CalibratePlayerPos(point.transform.position);
 
-            if (Physics.Raycast(point.transform.position, Vector3.down, out hitObject, rayDistanceY))
+            Debug.DrawRay(calibratePos, Vector3.down * rayDistanceY, Color.red);
+            Debug.DrawRay(calibratePos, Vector3.forward * rayDistanceZ, Color.red);
+            Debug.DrawRay(calibratePos, Vector3.back * rayDistanceZ, Color.red);
+
+            if (Physics.Raycast(calibratePos, Vector3.down, out hitObject, rayDistanceY))
             {
                 Debug.Log(hitObject.collider.name);
                 onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
             }
 
-            if (Physics.Raycast(point.transform.position, Vector3.forward, out hitObject, rayDistanceZ))
+            if (Physics.Raycast(calibratePos, Vector3.forward, out hitObject, rayDistanceZ))
             {
                 Debug.Log(hitObject.collider.name);
                 onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
             }
 
-            if (Physics.Raycast(point.transform.position, Vector3.back, out hitObject, rayDistanceZ))
+            if (Physics.Raycast(calibratePos, Vector3.back, out hitObject, rayDistanceZ))
             {
                 Debug.Log(hitObject.collider.name);
                 onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
             }
+
+            // ---------------
+            if (Physics.Raycast(calibratePos + new Vector3(0.05f, 0, 0), Vector3.forward, out hitObject, rayDistanceZ))
+            {
+                Debug.Log(hitObject.collider.name);
+                onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
+            }
+
+            if (Physics.Raycast(calibratePos + new Vector3(0.05f, 0, 0), Vector3.back, out hitObject, rayDistanceZ))
+            {
+                Debug.Log(hitObject.collider.name);
+                onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
+            }
+
+            if (Physics.Raycast(calibratePos + new Vector3(-0.05f, 0, 0), Vector3.forward, out hitObject, rayDistanceZ))
+            {
+                Debug.Log(hitObject.collider.name);
+                onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
+            }
+
+            if (Physics.Raycast(calibratePos + new Vector3(-0.05f, 0, 0), Vector3.back, out hitObject, rayDistanceZ))
+            {
+                Debug.Log(hitObject.collider.name);
+                onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
+            }
+
+            if (Physics.Raycast(calibratePos + new Vector3(0, 0.05f, 0), Vector3.forward, out hitObject, rayDistanceZ))
+            {
+                Debug.Log(hitObject.collider.name);
+                onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
+            }
+
+            if (Physics.Raycast(calibratePos + new Vector3(0, 0.05f, 0), Vector3.back, out hitObject, rayDistanceZ))
+            {
+                Debug.Log(hitObject.collider.name);
+                onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
+            }
+
+            if (Physics.Raycast(calibratePos + new Vector3(0, -0.05f, 0), Vector3.forward, out hitObject, rayDistanceZ))
+            {
+                Debug.Log(hitObject.collider.name);
+                onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
+            }
+
+            if (Physics.Raycast(calibratePos + new Vector3(0, -0.05f, 0), Vector3.back, out hitObject, rayDistanceZ))
+            {
+                Debug.Log(hitObject.collider.name);
+                onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
+            }
+            
+            // ---------------
         }
     }
 
