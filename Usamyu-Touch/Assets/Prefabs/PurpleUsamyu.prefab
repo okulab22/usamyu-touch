@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7385855769436952419}
   - component: {fileID: 934574471767377218}
   - component: {fileID: 6162450940592696135}
+  - component: {fileID: 8781747268686962853}
   m_Layer: 0
   m_Name: PurpleUsamyu
   m_TagString: Usamyu
@@ -113,3 +114,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseScore: -100
   survivalTime: 3
+--- !u!114 &8781747268686962853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7385855769436952421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f98cbf7dab322204a998ed26353a912c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionPrefab: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b, type: 3}
