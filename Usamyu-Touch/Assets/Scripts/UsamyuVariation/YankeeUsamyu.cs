@@ -22,30 +22,30 @@ public class YankeeUsamyu : Usamyu
     /// </summary>
     /// <returns>Vector2(x, y) 移動先のViewport座標</returns>
     protected override Vector2 Move()
-    {   
+    {
 
         /*落下スピード*/
-        if(GameManager.elapsedTime > 80) // 80秒経過後にスピードを0.005増やす
+        if (GameManager.elapsedTime > 80) // 80秒経過後にスピードを0.005増やす
             speed += 0.005f;
 
         /*停止開始時間*/
-        if(GameManager.elapsedTime <= 80) // ゲーム経過時間が80秒以下の場合
+        if (GameManager.elapsedTime <= 80) // ゲーム経過時間が80秒以下の場合
             stopTime = 1.0f; // 落下開始から1秒後に落下を一時停止
         else                             // ゲーム開始から80秒経過した場合
             stopTime = 0.5f; // 落下開始から0.5秒後に落下を一時停止
 
         /*落下*/
-        if(elapsedTime <= stopTime) // ヤンキーうさみゅ～発生からの経過時間がstopTime秒以下の場合
-            y = basePosition.y - speed*elapsedTime; // 初期位置から落下
-        else if(elapsedTime > stopTime && elapsedTime < 2) // ヤンキーうさみゅ～発生からの経過時間がstopTime秒～2秒の間の場合
-            y = basePosition.y - speed*stopTime; // 落下せず、その場で停止
+        if (elapsedTime <= stopTime) // ヤンキーうさみゅ～発生からの経過時間がstopTime秒以下の場合
+            y = basePosition.y - speed * elapsedTime; // 初期位置から落下
+        else if (elapsedTime > stopTime && elapsedTime < 2) // ヤンキーうさみゅ～発生からの経過時間がstopTime秒～2秒の間の場合
+            y = basePosition.y - speed * stopTime; // 落下せず、その場で停止
         else                            // ヤンキーうさみゅ～発生から2秒経過した場合
-            y = basePosition.y - speed*(elapsedTime - (2 - stopTime)); //停止位置から落下を再開
-       
+            y = basePosition.y - speed * (elapsedTime - (2 - stopTime)); //停止位置から落下を再開
+
 
         return new Vector2(basePosition.x, y);
     }
-    
+
 
     /// <summary>
     /// 自然消滅までに行う処理
