@@ -61,7 +61,7 @@ public class UsamyuManager : MonoBehaviour
     public void SpawnUsamyu()
     {
 
-        randNum = Random.Range(0, 15); // 0～14の乱数を生成
+        randNum = Random.Range(0, 13); // 0～13の乱数を生成
 
         if (randNum >= 0 && randNum <= 4) // 生成された乱数が0～4の場合
             kindofUsamyu = 0; // 赤うさみゅ～
@@ -70,15 +70,13 @@ public class UsamyuManager : MonoBehaviour
         else if (randNum >= 8 && randNum <= 9) // 生成された乱数が8～9の場合
             kindofUsamyu = 2; // 緑うさみゅ～
         else if (randNum >= 10 && randNum <= 11) // 生成された乱数が10～11の場合
-            kindofUsamyu = 3; // 紫うさみゅ～
+            kindofUsamyu = 3; // ヤンキーうさみゅ～
         else if (randNum == 12) // 生成された乱数が12の場合
             kindofUsamyu = 4;  // 黄色うさみゅ～
-        else                   // 生成された乱数が13または14の場合                 
-            kindofUsamyu = 5;  // うさみゅ～軍団
 
 
-        if (kindofUsamyu != 5)
-        { // うさみゅ～軍団以外の場合
+        if (kindofUsamyu != 3)
+        { // ヤンキーうさみゅ～以外の場合
             posx = Random.Range(15, 85) * 0.01f;
             posy = Random.Range(15, 85) * 0.01f;
         }
@@ -88,7 +86,7 @@ public class UsamyuManager : MonoBehaviour
             Vector2 playerPos = ScreenManager.GamePositionToViewportPosition(PlayerManager.nosePos);
 
             posx = playerPos.x;
-            posy = 1.0f;
+            posy = 1.5f;
         }
 
         Vector2 randomPosition = new Vector2(posx, posy);
