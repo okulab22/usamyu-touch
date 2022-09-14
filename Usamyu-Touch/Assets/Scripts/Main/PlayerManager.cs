@@ -46,6 +46,10 @@ public class PlayerManager : MonoBehaviour
     // ゲームオーバーイベント
     public UnityEvent OnGameOver = new UnityEvent();
 
+    // フィーバーイベント
+    public UnityEvent OnFeverStart = new UnityEvent();
+    public UnityEvent OnFeverEnd = new UnityEvent();
+
     void Awake()
     {
         // 姿勢位置のオブジェクト配列初期化
@@ -209,7 +213,10 @@ public class PlayerManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator FeverCoundDown()
     {
+        OnFeverStart.Invoke();
         yield return new WaitForSeconds(10);
+        OnFeverEnd.Invoke();
+        
         setState(State.Normal);
     }
 

@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcdbe2b7741fb994bb539cc37133298b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenManager: {fileID: 96566639}
+  playerManager: {fileID: 1862474019}
   usamyuPrefabs:
   - {fileID: 7385855769436952421, guid: ed6794b3cd59afb4dbc4cab06d98c739, type: 3}
   - {fileID: 7385855769436952421, guid: 45652283a2cf8e54d9b0188943d95610, type: 3}
@@ -4034,6 +4034,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnGameOver:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFeverStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFeverEnd:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &1862474020

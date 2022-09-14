@@ -7,8 +7,7 @@ using UnityEngine;
 /// </summary>
 public class UsamyuManager : MonoBehaviour
 {
-    // うさみゅ～出現位置調整用
-    [SerializeField] private ScreenManager screenManager;
+    [SerializeField] private PlayerManager playerManager;
     // 各うさみゅ～のPrefabを登録
     [SerializeField] private GameObject[] usamyuPrefabs;
 
@@ -32,6 +31,22 @@ public class UsamyuManager : MonoBehaviour
     private float posx;
     //うさみゅ～の初期のy座標
     private float posy;
+
+    private enum SpawnMode
+    {
+        Normal,
+        Fever
+    }
+
+    private SpawnMode spawnMode = SpawnMode.Normal;
+
+    void Awake()
+    {
+        spawnMode = SpawnMode.Normal;
+
+        playerManager.OnFeverStart.AddListener(StartFever);
+        playerManager.OnFeverEnd.AddListener(EndFever);
+    }
 
     /// <summary>
     /// ゲーム開始前の初期化処理
@@ -146,6 +161,18 @@ public class UsamyuManager : MonoBehaviour
     public void StopSpawn()
     {
         allowSpawn = false;
+    }
+
+    private void StartFever()
+    {
+        spawnMode = SpawnMode.Fever;
+        Debug.Log("Catch Start Fever.");
+    }
+
+    private void EndFever()
+    {
+        spawnMode = SpawnMode.Normal;
+        Debug.Log("Catch End Fever.");
     }
 
     void Update()
