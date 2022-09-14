@@ -49,13 +49,13 @@ public class GameUIManager : MonoBehaviour
         stateMessageUI.SetActive(false);
 
         DisplayTime.text = $"Playing Time : {GameManager.elapsedTime}";
-        DisplayScore.text = "SCORE 0";
+        DisplayScore.text = "0";
     }
 
     void Update()
     {
         DisplayTime.text = $"Playing Time : {GameManager.elapsedTime}";
-        DisplayScore.text = $"SCORE {ScoreManager.score}";
+        DisplayScore.text = $"{ScoreManager.score}";
     }
 
     public void UpdateLife()
@@ -73,7 +73,7 @@ public class GameUIManager : MonoBehaviour
         if (countNum > 0)
             stateMessageText.text = countNum.ToString();
         else
-            stateMessageText.text = "START!";
+            stateMessageText.text = "スタート!";
     }
 
     /// <summary>
@@ -82,7 +82,7 @@ public class GameUIManager : MonoBehaviour
     public void ShowGameOverMessage()
     {
         stateMessageUI.SetActive(true);
-        stateMessageText.text = "GAME OVER!";
+        stateMessageText.text = "ゲームオーバー!";
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ public class GameUIManager : MonoBehaviour
     public void ShowResult()
     {
         Result.SetActive(true);
-        UsamyuResult.text = $"うさみゅー {ScoreManager.sum}";
-        ScoreResult.text = $"スコア {ScoreManager.score}";
+        UsamyuResult.text = $"うさみゅー：{ScoreManager.sum}";
+        ScoreResult.text = $"スコア：{ScoreManager.score}";
     }
 }
