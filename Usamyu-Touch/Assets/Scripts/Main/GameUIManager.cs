@@ -49,13 +49,13 @@ public class GameUIManager : MonoBehaviour
         stateMessageUI.SetActive(false);
 
         DisplayTime.text = $"Playing Time : {GameManager.elapsedTime}";
-        DisplayScore.text = "Score : 0";
+        DisplayScore.text = "SCORE 0";
     }
 
     void Update()
     {
         DisplayTime.text = $"Playing Time : {GameManager.elapsedTime}";
-        DisplayScore.text = $"Score : {ScoreManager.score}";
+        DisplayScore.text = $"SCORE {ScoreManager.score}";
     }
 
     public void UpdateLife()
@@ -107,7 +107,7 @@ public class GameUIManager : MonoBehaviour
     public void ShowResult()
     {
         Result.SetActive(true);
-        UsamyuResult.text = $"Usamyu : {ScoreManager.sum}";
-        ScoreResult.text = $"Score : {ScoreManager.score}";
+        UsamyuResult.text = $"うさみゅー {ScoreManager.sum}";
+        ScoreResult.text = $"スコア {ScoreManager.score}";
     }
 }
