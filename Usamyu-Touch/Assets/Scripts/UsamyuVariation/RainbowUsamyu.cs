@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// きいろうさみゅ～
+/// 虹色うさみゅ～
 /// </summary>
-public class YellowUsamyu : Usamyu
+public class RainbowUsamyu : Usamyu
 {
     // 生存時間 [s]
     // PrefabのInspectorで設定する
