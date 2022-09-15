@@ -107,7 +107,7 @@ public class GameUIManager : MonoBehaviour
     public void ShowResult()
     {
         Result.SetActive(true);
-        UsamyuResult.text = $"うさみゅー：{ScoreManager.sum}";
-        ScoreResult.text = $"スコア：{ScoreManager.score}";
+        UsamyuResult.text = $"{ScoreManager.sum}";
+        ScoreResult.text = $"{ScoreManager.score}";
     }
 }
