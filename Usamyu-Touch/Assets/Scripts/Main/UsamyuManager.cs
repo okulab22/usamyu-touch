@@ -69,28 +69,29 @@ public class UsamyuManager : MonoBehaviour
     private int SelectUsamyu()
     {
         int kindofUsamyu = 0;
-        int randNum = Random.Range(0, 13); // 0～13の乱数を生成
 
         if (spawnMode == SpawnMode.Fever)
         {
-            if (randNum <= 6) // 生成された乱数が0～6の場合
+            int randNum = Random.Range(0, 13); // 0～12の乱数を生成
+            if (randNum <= 6)
                 kindofUsamyu = 0; // 赤うさみゅ～
-            else if (randNum >= 5 && randNum <= 9) // 生成された乱数が6～9の場合
+            else if (randNum <= 9) 
                 kindofUsamyu = 1; // 水色うさみゅ～
-            else if (randNum >= 8 && randNum <= 12) // 生成された乱数が10～12の場合
+            else if (randNum <= 12)
                 kindofUsamyu = 2; // 緑うさみゅ～
         }
         else
         {
-            if (randNum <= 4) // 生成された乱数が0～4の場合
+            int randNum = Random.Range(0, 20); // 0～19の乱数を生成
+            if (randNum <= 6)
                 kindofUsamyu = 0; // 赤うさみゅ～
-            else if (randNum <= 7) // 生成された乱数が5～7の場合
+            else if (randNum <= 10)
                 kindofUsamyu = 1; // 水色うさみゅ～
-            else if (randNum <= 9) // 生成された乱数が8～9の場合
+            else if (randNum <= 14)
                 kindofUsamyu = 2; // 緑うさみゅ～
-            else if (randNum <= 11) // 生成された乱数が10～11の場合
+            else if (randNum <= 18)
                 kindofUsamyu = 3; // ヤンキーうさみゅ～
-            else if (randNum == 12) // 生成された乱数が12の場合
+            else if (randNum == 19)
                 kindofUsamyu = 4;  // 黄色うさみゅ～
         }
 
@@ -154,7 +155,7 @@ public class UsamyuManager : MonoBehaviour
             Debug.Log($"Usamyu dict key:{id} is not found.");
             return;
         }
-        
+
 
         if (isTouched)
         {
