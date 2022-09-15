@@ -62,6 +62,10 @@ public class UsamyuManager : MonoBehaviour
         appearedUsamyuDict = new Dictionary<int, GameObject>();
     }
 
+    /// <summary>
+    /// 出現させるうさみゅ～を選択する
+    /// </summary>
+    /// <returns>うさみゅ～のindex</returns>
     private int SelectUsamyu()
     {
         int kindofUsamyu = 0;
@@ -93,6 +97,10 @@ public class UsamyuManager : MonoBehaviour
         return kindofUsamyu;
     }
 
+    /// <summary>
+    /// 指定したうさみゅ～をスポーンさせる
+    /// </summary>
+    /// <param name="kindofUsamyu">うさみゅ～のindex</param>
     private void Spawn(int kindofUsamyu)
     {
         Vector2 spawnPosition = Vector2.zero;
@@ -168,12 +176,18 @@ public class UsamyuManager : MonoBehaviour
         allowSpawn = false;
     }
 
+    /// <summary>
+    /// フィーバー開始
+    /// </summary>
     private void StartFever()
     {
         spawnMode = SpawnMode.Fever;
         Debug.Log("Catch Start Fever.");
     }
 
+    /// <summary>
+    /// フィーバー終了
+    /// </summary>
     private void EndFever()
     {
         spawnMode = SpawnMode.Normal;
@@ -182,41 +196,43 @@ public class UsamyuManager : MonoBehaviour
 
     void Update()
     {
-        // NOTE: ゲーム残り時間から経過時間による出現制御に仮変更
+        // モードによりスポーン上限と間隔を設定
+        if (spawnMode == SpawnMode.Fever)
+        {
+            maxusamyu = 12;
+            timeInterval = Random.Range(0, 1);
+        }
+        else
+        {
+            maxusamyu = 6;
+            if (GameManager.elapsedTime < 20) // 経過時間が20秒以内であれば2秒～4秒の間隔で次のうさみゅ～を出現させる
+            {
+                timeInterval = Random.Range(2, 4);
+            }
+            else if (GameManager.elapsedTime <= 80) // 残り時間が10秒～70秒以内であれば2秒～3秒の間隔で次のうさみゅ～を出現させる
+            {
+                timeInterval = Random.Range(1, 2);
+            }
+        }
+
         //スポーンが許可されているか (true だったらスポーンさせる)
         if (!allowSpawn)
             return;
 
-        // 経過時間が80秒以上であれば出現数の最大値を10にする
-        if (GameManager.elapsedTime >= 80)
-            maxusamyu = 12;
+        // 出現数が上限の場合は新たにスポーンしない
+        if (appearedUsamyuDict.Count >= maxusamyu)
+            return;
 
-        //出現数が上限以内か
-        if (appearedUsamyuDict.Count < maxusamyu)
+        // 出現間隔以上の時間が経っているか
+        if (elapsedTime < timeInterval) // 経過時間 < 出現間隔
+            elapsedTime += Time.deltaTime;
+        else
         {
-            //出現間隔以上の時間が経っているか
-            if (elapsedTime < timeInterval) //経過時間 < 出現間隔
-                elapsedTime += Time.deltaTime;
-            else
-            {
-                // うさみゅ～のスポーン
-                int kindofUsamyu = SelectUsamyu();
-                Spawn(kindofUsamyu);
+            // うさみゅ～のスポーン
+            int kindofUsamyu = SelectUsamyu();
+            Spawn(kindofUsamyu);
 
-                elapsedTime = 0;
-                if (GameManager.elapsedTime < 20) // 経過時間が20秒以内であれば2秒～4秒の間隔で次のうさみゅ～を出現させる
-                {
-                    timeInterval = Random.Range(2, 4);
-                }
-                else if (GameManager.elapsedTime <= 80) // 残り時間が10秒～70秒以内であれば2秒～3秒の間隔で次のうさみゅ～を出現させる
-                {
-                    timeInterval = Random.Range(1, 2);
-                }
-                else // 経過時間が80秒以上の場合 1秒～2秒の間隔でうさみゅ～を出現させる
-                {
-                    timeInterval = Random.Range(0, 1);
-                }
-            }
+            elapsedTime = 0;
         }
     }
 }
