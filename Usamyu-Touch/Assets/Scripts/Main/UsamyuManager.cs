@@ -92,7 +92,7 @@ public class UsamyuManager : MonoBehaviour
             else if (randNum <= 18)
                 kindofUsamyu = 3; // ヤンキーうさみゅ～
             else if (randNum == 19)
-                kindofUsamyu = 4;  // 黄色うさみゅ～
+                kindofUsamyu = 4;  // 虹色うさみゅ～
         }
 
         return kindofUsamyu;
