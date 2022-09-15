@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7385855769436952419}
   - component: {fileID: 934574471767377218}
   - component: {fileID: 6485335836069228544}
+  - component: {fileID: 6985150708339483865}
   m_Layer: 0
   m_Name: YellowUsamyu
   m_TagString: Usamyu
@@ -113,3 +114,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseScore: 500
   survivalTime: 2
+--- !u!114 &6985150708339483865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7385855769436952421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4941d0099f6de1c42b3f4fe2d2587f27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sparklePrefab: {fileID: 1000010823978654, guid: 3228a22491941734bb83ad691d17fcb9, type: 3}
