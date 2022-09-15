@@ -38,20 +38,28 @@ public class PlayerManager : MonoBehaviour
     public static Vector2 playerBLPoint = new Vector2(-0.6f, -0.7f);
     public static Vector2 playerTRPoint = new Vector2(1.1f, 0.65f);
 
+    private IEnumerator noDamageCountDown;
+
     // ライフ更新イベント
     public UnityEvent OnUpdateLife = new UnityEvent();
 
     // ゲームオーバーイベント
     public UnityEvent OnGameOver = new UnityEvent();
 
+    // フィーバーイベント
+    public UnityEvent OnFeverStart = new UnityEvent();
+    public UnityEvent OnFeverEnd = new UnityEvent();
+
     void Awake()
     {
         // 姿勢位置のオブジェクト配列初期化
         posePointList = new GameObject[] { leftHand, rightHand, leftFoot, rightFoot };
+        noDamageCountDown = NoDamageCountDown();
     }
 
     void Start()
     {
+        nowState = State.Normal;
         playerLife = 5;
         OnUpdateLife.Invoke();
     }
@@ -97,6 +105,7 @@ public class PlayerManager : MonoBehaviour
                 onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
             }
 
+            // 当たり判定を縦横に拡大（><）
             // ---------------
             if (Physics.Raycast(calibratePos + new Vector3(0.05f, 0, 0), Vector3.forward, out hitObject, rayDistanceZ))
             {
@@ -145,7 +154,7 @@ public class PlayerManager : MonoBehaviour
                 Debug.Log(hitObject.collider.name);
                 onCollisionRay(hitObject.collider.tag, hitObject.collider.gameObject);
             }
-            
+
             // ---------------
         }
     }
@@ -199,6 +208,19 @@ public class PlayerManager : MonoBehaviour
     }
 
     /// <summary>
+    /// フィーバーのカウント
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator FeverCoundDown()
+    {
+        OnFeverStart.Invoke();
+        yield return new WaitForSeconds(10);
+        OnFeverEnd.Invoke();
+        
+        setState(State.Normal);
+    }
+
+    /// <summary>
     /// うさみゅ～タッチ時の処理
     /// </summary>
     /// <param name="usamyu"></param>
@@ -207,6 +229,10 @@ public class PlayerManager : MonoBehaviour
         if (usamyu.type == "damage" && nowState == State.Normal)
         {
             setState(State.Damaged);
+        }
+        else if (usamyu.type == "fever" && nowState != State.Fever)
+        {
+            setState(State.Fever);
         }
     }
 
@@ -226,8 +252,21 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(NoDamageCountDown());
+            noDamageCountDown = NoDamageCountDown();
+            StartCoroutine(noDamageCountDown);
         }
+    }
+
+    /// <summary>
+    /// フィーバー突入時
+    /// </summary>
+    private void OnFever()
+    {
+        // ダメージによる無敵カウントを停止
+        StopCoroutine(noDamageCountDown);
+
+        // フィーバーカウント開始
+        StartCoroutine(FeverCoundDown());
     }
 
     /// <summary>
@@ -255,6 +294,7 @@ public class PlayerManager : MonoBehaviour
                 OnDamaged();
                 break;
             case State.Fever:
+                OnFever();
                 break;
             default:
                 break;

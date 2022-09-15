@@ -7,8 +7,7 @@ using UnityEngine;
 /// </summary>
 public class UsamyuManager : MonoBehaviour
 {
-    // うさみゅ～出現位置調整用
-    [SerializeField] private ScreenManager screenManager;
+    [SerializeField] private PlayerManager playerManager;
     // 各うさみゅ～のPrefabを登録
     [SerializeField] private GameObject[] usamyuPrefabs;
 
@@ -24,14 +23,22 @@ public class UsamyuManager : MonoBehaviour
     private float elapsedTime = 0;
     //次のうさみゅ～が発生するまでの時間間隔
     private int timeInterval;
-    //うさみゅ～の種類を決定する乱数
-    private int randNum;
-    //うさみゅ～の種類
-    private int kindofUsamyu;
-    //うさみゅ～の初期のx座標
-    private float posx;
-    //うさみゅ～の初期のy座標
-    private float posy;
+
+    private enum SpawnMode
+    {
+        Normal,
+        Fever
+    }
+
+    private SpawnMode spawnMode = SpawnMode.Normal;
+
+    void Awake()
+    {
+        spawnMode = SpawnMode.Normal;
+
+        playerManager.OnFeverStart.AddListener(StartFever);
+        playerManager.OnFeverEnd.AddListener(EndFever);
+    }
 
     /// <summary>
     /// ゲーム開始前の初期化処理
@@ -56,46 +63,67 @@ public class UsamyuManager : MonoBehaviour
     }
 
     /// <summary>
-    /// うさみゅ～をスポーンさせる
+    /// 出現させるうさみゅ～を選択する
     /// </summary>
-    public void SpawnUsamyu()
+    /// <returns>うさみゅ～のindex</returns>
+    private int SelectUsamyu()
     {
+        int kindofUsamyu = 0;
+        int randNum = Random.Range(0, 13); // 0～13の乱数を生成
 
-        randNum = Random.Range(0, 13); // 0～13の乱数を生成
+        if (spawnMode == SpawnMode.Fever)
+        {
+            if (randNum <= 6) // 生成された乱数が0～6の場合
+                kindofUsamyu = 0; // 赤うさみゅ～
+            else if (randNum >= 5 && randNum <= 9) // 生成された乱数が6～9の場合
+                kindofUsamyu = 1; // 水色うさみゅ～
+            else if (randNum >= 8 && randNum <= 12) // 生成された乱数が10～12の場合
+                kindofUsamyu = 2; // 緑うさみゅ～
+        }
+        else
+        {
+            if (randNum <= 4) // 生成された乱数が0～4の場合
+                kindofUsamyu = 0; // 赤うさみゅ～
+            else if (randNum <= 7) // 生成された乱数が5～7の場合
+                kindofUsamyu = 1; // 水色うさみゅ～
+            else if (randNum <= 9) // 生成された乱数が8～9の場合
+                kindofUsamyu = 2; // 緑うさみゅ～
+            else if (randNum <= 11) // 生成された乱数が10～11の場合
+                kindofUsamyu = 3; // ヤンキーうさみゅ～
+            else if (randNum == 12) // 生成された乱数が12の場合
+                kindofUsamyu = 4;  // 黄色うさみゅ～
+        }
 
-        if (randNum >= 0 && randNum <= 4) // 生成された乱数が0～4の場合
-            kindofUsamyu = 0; // 赤うさみゅ～
-        else if (randNum >= 5 && randNum <= 7) // 生成された乱数が5～7の場合
-            kindofUsamyu = 1; // 水色うさみゅ～
-        else if (randNum >= 8 && randNum <= 9) // 生成された乱数が8～9の場合
-            kindofUsamyu = 2; // 緑うさみゅ～
-        else if (randNum >= 10 && randNum <= 11) // 生成された乱数が10～11の場合
-            kindofUsamyu = 3; // ヤンキーうさみゅ～
-        else if (randNum == 12) // 生成された乱数が12の場合
-            kindofUsamyu = 4;  // 黄色うさみゅ～
+        return kindofUsamyu;
+    }
 
+    /// <summary>
+    /// 指定したうさみゅ～をスポーンさせる
+    /// </summary>
+    /// <param name="kindofUsamyu">うさみゅ～のindex</param>
+    private void Spawn(int kindofUsamyu)
+    {
+        Vector2 spawnPosition = Vector2.zero;
 
+        // スポーン座標を決定
         if (kindofUsamyu != 3)
         { // ヤンキーうさみゅ～以外の場合
-            posx = Random.Range(15, 85) * 0.01f;
-            posy = Random.Range(15, 85) * 0.01f;
+            spawnPosition.x = Random.Range(15, 85) * 0.01f;
+            spawnPosition.y = Random.Range(15, 85) * 0.01f;
         }
         else
         { // うさみゅ～軍団の場合
             // プレイヤーの中心位置を取得
             Vector2 playerPos = ScreenManager.GamePositionToViewportPosition(PlayerManager.nosePos);
 
-            posx = playerPos.x;
-            posy = 1.5f;
+            spawnPosition.x = playerPos.x;
+            spawnPosition.y = 1.5f;
         }
-
-        Vector2 randomPosition = new Vector2(posx, posy);
-
 
         // うさみゅ～をPrefabから読み込み
         GameObject usamyuObj =
             Instantiate(usamyuPrefabs[kindofUsamyu],
-                ScreenManager.ViewportToGamePosition(randomPosition, true),
+                ScreenManager.ViewportToGamePosition(spawnPosition, true),
                 Quaternion.identity);
 
         // 管理Dictに登録
@@ -103,7 +131,7 @@ public class UsamyuManager : MonoBehaviour
 
         // フィールドに表示
         Usamyu usamyu = usamyuObj.GetComponent<Usamyu>();
-        usamyu.Create(usamyuId, randomPosition);
+        usamyu.Create(usamyuId, spawnPosition);
 
         // idを更新
         usamyuId++;
@@ -148,40 +176,63 @@ public class UsamyuManager : MonoBehaviour
         allowSpawn = false;
     }
 
+    /// <summary>
+    /// フィーバー開始
+    /// </summary>
+    private void StartFever()
+    {
+        spawnMode = SpawnMode.Fever;
+        Debug.Log("Catch Start Fever.");
+    }
+
+    /// <summary>
+    /// フィーバー終了
+    /// </summary>
+    private void EndFever()
+    {
+        spawnMode = SpawnMode.Normal;
+        Debug.Log("Catch End Fever.");
+    }
+
     void Update()
     {
-        // NOTE: ゲーム残り時間から経過時間による出現制御に仮変更
-        //スポーンが許可されているか (true だったらスポーンさせる)
-        if (allowSpawn == true)
+        // モードによりスポーン上限と間隔を設定
+        if (spawnMode == SpawnMode.Fever)
         {
-            // 経過時間が80秒以上であれば出現数の最大値を10にする
-            if (GameManager.elapsedTime >= 80)
-                maxusamyu = 12;
-
-            //出現数が上限以内か
-            if (appearedUsamyuDict.Count < maxusamyu)
+            maxusamyu = 12;
+            timeInterval = Random.Range(0, 1);
+        }
+        else
+        {
+            maxusamyu = 6;
+            if (GameManager.elapsedTime < 20) // 経過時間が20秒以内であれば2秒～4秒の間隔で次のうさみゅ～を出現させる
             {
-                //出現間隔以上の時間が経っているか
-                if (elapsedTime < timeInterval) //経過時間 < 出現間隔
-                    elapsedTime += Time.deltaTime;
-                else
-                {
-                    SpawnUsamyu(); // うさみゅ～のスポーン
-                    elapsedTime = 0;
-                    if (GameManager.elapsedTime < 20) // 経過時間が20秒以内であれば2秒～4秒の間隔で次のうさみゅ～を出現させる
-                    {
-                        timeInterval = Random.Range(2, 4);
-                    }
-                    else if (GameManager.elapsedTime <= 80) // 残り時間が10秒～70秒以内であれば2秒～3秒の間隔で次のうさみゅ～を出現させる
-                    {
-                        timeInterval = Random.Range(1, 2);
-                    }
-                    else // 経過時間が80秒以上の場合 1秒～2秒の間隔でうさみゅ～を出現させる
-                    {
-                        timeInterval = Random.Range(0, 1);
-                    }
-                }
+                timeInterval = Random.Range(2, 4);
             }
+            else if (GameManager.elapsedTime <= 80) // 残り時間が10秒～70秒以内であれば2秒～3秒の間隔で次のうさみゅ～を出現させる
+            {
+                timeInterval = Random.Range(1, 2);
+            }
+        }
+
+        //スポーンが許可されているか (true だったらスポーンさせる)
+        if (!allowSpawn)
+            return;
+
+        // 出現数が上限の場合は新たにスポーンしない
+        if (appearedUsamyuDict.Count >= maxusamyu)
+            return;
+
+        // 出現間隔以上の時間が経っているか
+        if (elapsedTime < timeInterval) // 経過時間 < 出現間隔
+            elapsedTime += Time.deltaTime;
+        else
+        {
+            // うさみゅ～のスポーン
+            int kindofUsamyu = SelectUsamyu();
+            Spawn(kindofUsamyu);
+
+            elapsedTime = 0;
         }
     }
 }
