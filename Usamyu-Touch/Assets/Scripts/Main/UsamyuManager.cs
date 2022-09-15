@@ -144,7 +144,17 @@ public class UsamyuManager : MonoBehaviour
     /// <param name="isTouched">タッチによって消滅した場合はtrue</param>
     public static void NotifyDeleteUsamyu(int id, int score, bool isTouched)
     {
-        GameObject targetUsamyu = appearedUsamyuDict[id];
+        GameObject targetUsamyu;
+        try
+        {
+            targetUsamyu = appearedUsamyuDict[id];
+        }
+        catch (KeyNotFoundException)
+        {
+            Debug.Log($"Usamyu dict key:{id} is not found.");
+            return;
+        }
+        
 
         if (isTouched)
         {
