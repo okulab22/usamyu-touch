@@ -176,6 +176,10 @@ public class GameManager : MonoBehaviour
         gameUIManager.HideStateMessageUI();
         gameUIManager.ShowResult();
         backTitleBtForPose.SetActive(true);
+
+        // スコア100,000以上の場合はエクセレントSE
+        if (ScoreManager.score >= 100000)
+            SoundManager.instance.playExcellentSE();
     }
 
     /// <summary>

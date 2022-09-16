@@ -2149,6 +2149,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0ef7d6932809149618947a383811cd7a, type: 3}
   - {fileID: 8300000, guid: 3d0f65713be5c41bfa08d4e6ebf89d19, type: 3}
   - {fileID: 8300000, guid: 0decf74469a864d228cc503499d4eb17, type: 3}
+  excellentSE: {fileID: 8300000, guid: 241c89e4f6b38437590c4ef8f5624463, type: 3}
   returnSE: {fileID: 8300000, guid: 9170df7ec4d964bd981e2982cbc34633, type: 3}
   bgmObject: {fileID: 51034806}
   soundEffectObject: {fileID: 1947759084}
