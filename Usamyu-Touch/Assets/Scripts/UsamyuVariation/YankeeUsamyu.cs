@@ -16,6 +16,15 @@ public class YankeeUsamyu : Usamyu
     private float speed = 0.5f; // 落下スピード
     private float stopTime; // 落下の一時停止を開始する時間
 
+    public override void Create(int id, Vector2 viewportPos)
+    {
+        base.Create(id, viewportPos);
+
+        /*落下スピード*/
+        if (GameManager.elapsedTime > 80) // 80秒経過後にスピードを0.005増やす
+            speed += 0.25f;
+    }
+
     /// <summary>
     /// うさみゅ～の移動処理
     /// フレーム毎に呼び出される
@@ -23,16 +32,11 @@ public class YankeeUsamyu : Usamyu
     /// <returns>Vector2(x, y) 移動先のViewport座標</returns>
     protected override Vector2 Move()
     {
-
-        /*落下スピード*/
-        if (GameManager.elapsedTime > 80) // 80秒経過後にスピードを0.005増やす
-            speed += 0.005f;
-
         /*停止開始時間*/
         if (GameManager.elapsedTime <= 80) // ゲーム経過時間が80秒以下の場合
             stopTime = 1.0f; // 落下開始から1秒後に落下を一時停止
         else                             // ゲーム開始から80秒経過した場合
-            stopTime = 0.5f; // 落下開始から0.5秒後に落下を一時停止
+            stopTime = 0.8f; // 落下開始から0.5秒後に落下を一時停止
 
         /*落下*/
         if (elapsedTime <= stopTime) // ヤンキーうさみゅ～発生からの経過時間がstopTime秒以下の場合

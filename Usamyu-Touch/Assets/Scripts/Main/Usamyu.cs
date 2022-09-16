@@ -44,7 +44,7 @@ public abstract class Usamyu : MonoBehaviour
     /// Instantiate後に呼び出してうさみゅ～を可視化する
     /// </summary>
     /// <param name="id">固有id</param>
-    public void Create(int id, Vector2 viewportPos)
+    public virtual void Create(int id, Vector2 viewportPos)
     {
         // idと初期スポーン位置を保持
         this.id = id;
