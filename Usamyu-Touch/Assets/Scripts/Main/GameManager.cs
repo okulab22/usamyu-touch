@@ -139,6 +139,8 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 3; i >= 0; i--)
         {
+            // カウントダウンSE
+            SoundManager.instance.PlayCountDownSE(i);
             // カウントダウン表示
             gameUIManager.UpdateCountNumText(i);
 

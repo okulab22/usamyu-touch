@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour
 {
     [SerializeField] private AudioSource GameBGM;
     [SerializeField] private AudioSource SoundEffect;
+    [SerializeField] private AudioClip[] countDownSE;
     //鳴き声は配列にする．
     [SerializeField] private AudioClip[] usamyuSE;
     //リザルトからタイトルに戻る時のSE
@@ -49,6 +50,11 @@ public class SoundManager : MonoBehaviour
     public void StopBGM()
     {
         GameBGM.Stop();
+    }
+
+    public void PlayCountDownSE(int count)
+    {
+        SoundEffect.PlayOneShot(countDownSE[count]);
     }
 
     /// <summary>
