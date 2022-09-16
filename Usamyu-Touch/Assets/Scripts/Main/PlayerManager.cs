@@ -46,6 +46,9 @@ public class PlayerManager : MonoBehaviour
     // ゲームオーバーイベント
     public UnityEvent OnGameOver = new UnityEvent();
 
+    // ダメージイベント
+    public UnityEvent OnDamageStart = new UnityEvent();
+
     // フィーバーイベント
     public UnityEvent OnFeverStart = new UnityEvent();
     public UnityEvent OnFeverEnd = new UnityEvent();
@@ -203,6 +206,7 @@ public class PlayerManager : MonoBehaviour
     /// <returns></returns>
     IEnumerator NoDamageCountDown()
     {
+        OnDamageStart.Invoke();
         yield return new WaitForSeconds(3);
         setState(State.Normal);
     }
