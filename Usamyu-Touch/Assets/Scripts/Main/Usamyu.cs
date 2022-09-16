@@ -21,6 +21,9 @@ public abstract class Usamyu : MonoBehaviour
     [SerializeField] protected int baseScore; //初期スコア
     protected int currentScore; // 変動スコア
 
+    // エフェクト
+    [SerializeField] GameObject deleteEffect;
+
     // うさみゅ～のタイプ
     public string type;
 
@@ -70,11 +73,32 @@ public abstract class Usamyu : MonoBehaviour
         // うさみゅ～の鳴き声
         SoundManager.instance.PlayUsamyuSE();
 
+        // エフェクト再生
+        PlayDeleteEffect();
+
         // Managerに消去通知
         UsamyuManager.NotifyDeleteUsamyu(id, currentScore, true);
 
         // コルーチンをストップ
         StopCoroutine(untilDespawn);
+    }
+
+    private void PlayDeleteEffect()
+    {
+        GameObject effectObject = Instantiate(deleteEffect, this.transform.position, Quaternion.identity);
+        ParticleSystem effect;
+
+        foreach (Transform child in effectObject.transform)
+        {
+            effect = child.GetComponent<ParticleSystem>();
+            if (effect != null)
+            {
+                effect.Play();
+                Debug.Log("Play Effect");
+            }
+        }
+
+        Destroy(effectObject, 1f);
     }
 
     /// <summary>

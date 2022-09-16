@@ -112,4 +112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseScore: 100
+  deleteEffect: {fileID: 1500378020736912, guid: 7e8eac6eb3dddad40bc85eb2e7267c9c, type: 3}
+  type: 
   survivalTime: 5
