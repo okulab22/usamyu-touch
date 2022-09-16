@@ -256,6 +256,7 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
+            SoundManager.instance.PlayDamageSE();
             noDamageCountDown = NoDamageCountDown();
             StartCoroutine(noDamageCountDown);
         }
@@ -268,6 +269,8 @@ public class PlayerManager : MonoBehaviour
     {
         // ダメージによる無敵カウントを停止
         StopCoroutine(noDamageCountDown);
+
+        SoundManager.instance.PlayFeverSE();
 
         // フィーバーカウント開始
         StartCoroutine(FeverCoundDown());

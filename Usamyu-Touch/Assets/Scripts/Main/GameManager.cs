@@ -117,6 +117,7 @@ public class GameManager : MonoBehaviour
                 usamyuManager.StopSpawn();
                 usamyuManager.DeleteAllUsamyu();
                 SoundManager.instance.StopBGM();
+                SoundManager.instance.PlayFinishSE();
 
                 // タイムアップ時のUI表示
                 StartCoroutine(OnTimeIsUp());
@@ -139,6 +140,8 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 3; i >= 0; i--)
         {
+            // カウントダウンSE
+            SoundManager.instance.PlayCountDownSE(i);
             // カウントダウン表示
             gameUIManager.UpdateCountNumText(i);
 
@@ -173,6 +176,10 @@ public class GameManager : MonoBehaviour
         gameUIManager.HideStateMessageUI();
         gameUIManager.ShowResult();
         backTitleBtForPose.SetActive(true);
+
+        // スコア100,000以上の場合はエクセレントSE
+        if (ScoreManager.score >= 100000)
+            SoundManager.instance.playExcellentSE();
     }
 
     /// <summary>
