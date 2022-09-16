@@ -58,7 +58,7 @@ public abstract class Usamyu : MonoBehaviour
         this.gameObject.SetActive(true);
 
         // うさみゅ～の鳴き声
-        SoundManager.instance.PlayUsamyuSE();
+        SoundManager.instance.PlayUsamyuSpawnSE();
 
         // 自然消滅までの処理開始
         untilDespawn = UntilDespawn();

@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip[] countDownSE;
     [SerializeField] private AudioClip finishSE;
     //鳴き声は配列にする．
+    [SerializeField] private AudioClip[] usamyuSpawnSE;
     [SerializeField] private AudioClip[] usamyuSE;
     [SerializeField] private AudioClip excellentSE;
     //リザルトからタイトルに戻る時のSE
@@ -68,6 +69,13 @@ public class SoundManager : MonoBehaviour
     {
         SoundEffect.PlayOneShot(excellentSE);
     }
+
+    public void PlayUsamyuSpawnSE()
+    {
+        int n = Random.Range(0, usamyuSpawnSE.Length);
+        SoundEffect.PlayOneShot(usamyuSpawnSE[n]);
+    }
+
     /// <summary>
     /// うさみゅ～の鳴き声を再生
     /// </summary>

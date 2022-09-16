@@ -2142,13 +2142,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 6ea84942c995b4586b63085ee63c4302, type: 3}
   - {fileID: 8300000, guid: 0e0b79fc8805645f693d3546d07c40f6, type: 3}
   finishSE: {fileID: 8300000, guid: 5905aa23460df4e469260a350c69e136, type: 3}
+  usamyuSpawnSE:
+  - {fileID: 8300000, guid: 334e9af060e2e446080d7265bf52e537, type: 3}
+  - {fileID: 8300000, guid: 31108a1f272fd4891ac1a9b291fc15f7, type: 3}
   usamyuSE:
-  - {fileID: 8300000, guid: 5663843b6390141ebbe290f739867464, type: 3}
-  - {fileID: 8300000, guid: 82044397d24cb4b07bc31e7877850ba3, type: 3}
-  - {fileID: 8300000, guid: 77408d01d1feb4f5fa50ca6b11d9716a, type: 3}
-  - {fileID: 8300000, guid: 0ef7d6932809149618947a383811cd7a, type: 3}
-  - {fileID: 8300000, guid: 3d0f65713be5c41bfa08d4e6ebf89d19, type: 3}
-  - {fileID: 8300000, guid: 0decf74469a864d228cc503499d4eb17, type: 3}
+  - {fileID: 8300000, guid: 41367ce64aae940cbb83b470c17c6857, type: 3}
+  - {fileID: 8300000, guid: c4aa574e751f54124b727d12841b2cef, type: 3}
+  - {fileID: 8300000, guid: f2772a973460d44c8bf942373ffc5cd4, type: 3}
+  - {fileID: 8300000, guid: 236d17370dce9486dbcebc1519ca53b3, type: 3}
+  - {fileID: 8300000, guid: d789fbb8f7a774ddda3e3c312264890d, type: 3}
+  - {fileID: 8300000, guid: d3b63f127aca14a91968955a963e34c7, type: 3}
   excellentSE: {fileID: 8300000, guid: 241c89e4f6b38437590c4ef8f5624463, type: 3}
   returnSE: {fileID: 8300000, guid: 9170df7ec4d964bd981e2982cbc34633, type: 3}
   bgmObject: {fileID: 51034806}
