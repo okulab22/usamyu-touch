@@ -2141,6 +2141,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1e6da1b84895f41cf8da00f62d15da39, type: 3}
   - {fileID: 8300000, guid: 6ea84942c995b4586b63085ee63c4302, type: 3}
   - {fileID: 8300000, guid: 0e0b79fc8805645f693d3546d07c40f6, type: 3}
+  finishSE: {fileID: 8300000, guid: 5905aa23460df4e469260a350c69e136, type: 3}
   usamyuSE:
   - {fileID: 8300000, guid: 5663843b6390141ebbe290f739867464, type: 3}
   - {fileID: 8300000, guid: 82044397d24cb4b07bc31e7877850ba3, type: 3}

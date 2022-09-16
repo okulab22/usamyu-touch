@@ -117,6 +117,7 @@ public class GameManager : MonoBehaviour
                 usamyuManager.StopSpawn();
                 usamyuManager.DeleteAllUsamyu();
                 SoundManager.instance.StopBGM();
+                SoundManager.instance.PlayFinishSE();
 
                 // タイムアップ時のUI表示
                 StartCoroutine(OnTimeIsUp());
