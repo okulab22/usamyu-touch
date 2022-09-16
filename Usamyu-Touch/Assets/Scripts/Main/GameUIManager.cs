@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 /// <summary>
 /// ゲームシーンUI制御
@@ -22,6 +23,9 @@ public class GameUIManager : MonoBehaviour
 
     [SerializeField]
     private GameObject Result;
+
+    [SerializeField]
+    private TextMeshProUGUI playTime;
 
     [SerializeField]
     private TextMeshProUGUI UsamyuResult;
@@ -106,8 +110,12 @@ public class GameUIManager : MonoBehaviour
     /// </summary>
     public void ShowResult()
     {
+        // プレイ時間[s]をmm:ssにする
+        TimeSpan span = new TimeSpan(0, 0, GameManager.elapsedTime);
+
         Result.SetActive(true);
         UsamyuResult.text = $"{ScoreManager.sum}";
         ScoreResult.text = $"{ScoreManager.score}";
+        playTime.text = span.ToString(@"mm\:ss");
     }
 }
