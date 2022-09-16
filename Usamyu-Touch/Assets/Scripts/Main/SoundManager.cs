@@ -7,17 +7,21 @@ using UnityEngine;
 /// </summary>
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] private AudioSource GameBGM;
+    [SerializeField] private AudioSource GameBGM, fever;
     [SerializeField] private AudioSource SoundEffect;
+
+    // うさみゅ～
     [SerializeField] private AudioClip[] countDownSE;
     [SerializeField] private AudioClip finishSE;
-    //鳴き声は配列にする．
     [SerializeField] private AudioClip[] usamyuSpawnSE;
     [SerializeField] private AudioClip[] usamyuSE;
     [SerializeField] private AudioClip excellentSE;
+
+    // その他
+    [SerializeField] private AudioClip damageSE;
     //リザルトからタイトルに戻る時のSE
     [SerializeField] private AudioClip returnSE;
-    [SerializeField] private GameObject bgmObject, soundEffectObject;
+    [SerializeField] private GameObject bgmObject, feverLoopObject, soundEffectObject;
 
     static public SoundManager instance;
 
@@ -31,6 +35,7 @@ public class SoundManager : MonoBehaviour
             // 自身とAudioSourceはシーン間で保持
             DontDestroyOnLoad(gameObject);
             DontDestroyOnLoad(bgmObject);
+            DontDestroyOnLoad(feverLoopObject);
             DontDestroyOnLoad(soundEffectObject);
         }
         else
@@ -85,12 +90,29 @@ public class SoundManager : MonoBehaviour
         SoundEffect.PlayOneShot(usamyuSE[n]);
     }
 
+    public void PlayFeverSE()
+    {
+        StartCoroutine(LoopFeverSE());
+    }
+
+    public void PlayDamageSE()
+    {
+        SoundEffect.PlayOneShot(damageSE);
+    }
+
     /// <summary>
     /// タイトル画面に戻るSEを再生
     /// </summary>
     public void PlayReturnSE()
     {
         SoundEffect.PlayOneShot(returnSE);
+    }
+
+    IEnumerator LoopFeverSE()
+    {
+        fever.Play();
+        yield return new WaitForSeconds(10f);
+        fever.Stop();
     }
 }
 
