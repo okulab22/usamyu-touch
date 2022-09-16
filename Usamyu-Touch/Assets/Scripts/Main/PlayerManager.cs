@@ -35,8 +35,8 @@ public class PlayerManager : MonoBehaviour
     public static int playerLife = 0;
 
     // キャリブレーション用対角座標
-    public static Vector2 playerBLPoint = new Vector2(-0.6f, -0.7f);
-    public static Vector2 playerTRPoint = new Vector2(1.1f, 0.65f);
+    public static Vector2 playerBLPoint = new Vector2(-1.15f, -0.52f);
+    public static Vector2 playerTRPoint = new Vector2(1.22f, 0.6f);
 
     private IEnumerator noDamageCountDown;
 
